@@ -483,6 +483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userStatusScreen: {fileID: 1501133709}
   loginSignUpScreen: {fileID: 1364240196}
+  currUserEntryMode: 0
   loginOrSignUpButtonText: {fileID: 1328796647}
   goToLoginScreenPopUp: {fileID: 1528600459}
   userNameInputField: {fileID: 556300875}
@@ -3701,7 +3702,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2018125309}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 40146374}
+        m_TargetAssemblyTypeName: Login_Signup_UI_Manager, Assembly-CSharp
+        m_MethodName: LoginOrSignUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2018125309
 MonoBehaviour:
   m_ObjectHideFlags: 0
