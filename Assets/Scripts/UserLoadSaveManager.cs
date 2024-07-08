@@ -14,9 +14,13 @@ public class UserLoadSaveManager : MonoBehaviour
 
     public Users testData;
 
+    public delegate void NewUserInfoSaved(UserData user);
+    public static NewUserInfoSaved NewUserInfoSavedSuccessEvent;
+
     private void Start()
     {
         saveFilePath = Path.Combine(Application.dataPath, "Resources", saveFileName + ".json");
+        LoadAvailableUsersFile();
     }
 
     void LoadAvailableUsersFile()
@@ -47,7 +51,7 @@ public class UserLoadSaveManager : MonoBehaviour
         }
     }
 
-    void SaveUserToFile(UserData dataToSave)
+    public void SaveUserToFile(UserData dataToSave)
     {
         Users userList = new Users();
         // Load existing users from the JSON file
@@ -70,6 +74,8 @@ public class UserLoadSaveManager : MonoBehaviour
 
         // Save the updated JSON to the file
         File.WriteAllText(saveFilePath, updatedJson);
+        LoadAvailableUsersFile();
+        NewUserInfoSavedSuccessEvent?.Invoke(dataToSave);
         Debug.Log("Saved users to path : " + saveFilePath);
     }
 
@@ -84,17 +90,42 @@ public class UserLoadSaveManager : MonoBehaviour
 
     }
 
+    public bool CheckUser(string name)
+    {
+        return availableUserDictionary.ContainsKey(name);
+    }
+
+    public bool IsPasswordCorrect(UserData data)
+    {
+        if (availableUserDictionary.ContainsKey(data.userName))
+        {
+            string password = "";
+            if (availableUserDictionary.TryGetValue(data.userName, out password))
+            {
+                if (data.userPassword == password)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            CreateDefaultData();
-        }
+        //if (Input.GetKeyDown(KeyCode.S))
+        //{
+        //    CreateDefaultData();
+        //}
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LoadAvailableUsersFile();
-        }
+        //if (Input.GetKeyDown(KeyCode.L))
+        //{
+        //    LoadAvailableUsersFile();
+        //}
     }
 }
 
