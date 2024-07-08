@@ -6,7 +6,7 @@ using TMPro;
 
 public class LoginSignUpManager : MonoBehaviour
 {
-    private string userName;
+    public static string userName;
     private string userPassword;
 
     [SerializeField]
@@ -45,6 +45,7 @@ public class LoginSignUpManager : MonoBehaviour
         if (saveLoadManagerRef.IsPasswordCorrect(data))
         {
             LoginSuccessEvent?.Invoke(username);
+            userName = username;
         }
         else
         {
