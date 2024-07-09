@@ -8,6 +8,6 @@ public class AssetBundleBuilder : MonoBehaviour
     [MenuItem("Assets/Build AssetBundles")]
     static void BuildAllAssetBundles()
     {
-        BuildPipeline.BuildAssetBundles("Assets/AssetBundles", BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+        BuildPipeline.BuildAssetBundles("Assets/StreamingAssets", BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
     }
 }

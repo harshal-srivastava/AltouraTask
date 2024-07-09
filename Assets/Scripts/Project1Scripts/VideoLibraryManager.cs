@@ -40,7 +40,8 @@ public class VideoLibraryManager : MonoBehaviour
     private void GetAllAvailableVideos()
     {
         //videosAssetBundleURL = "file://" + Application.dataPath + "/AssetBundles/videos";
-        videosAssetBundleURL = string.Format("file:///{0}/AssetBundles/{1}", Application.dataPath, bundleName);
+        //videosAssetBundleURL = string.Format("file:///{0}/AssetBundles/{1}", Application.streamingAssetsPath, bundleName);
+        videosAssetBundleURL = Path.Combine(Application.streamingAssetsPath, bundleName);
         Debug.Log("path : " + videosAssetBundleURL);
         StartCoroutine(LoadVideoFromBundle());
     }

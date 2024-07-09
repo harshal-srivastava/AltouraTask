@@ -51,7 +51,7 @@ public class UserLoadSaveManager : MonoBehaviour
         }
     }
 
-    public void SaveUserToFile(UserData dataToSave)
+    public void SaveUserToFile(UserData dataToSave, bool defaultSave = false)
     {
         Users userList = new Users();
         // Load existing users from the JSON file
@@ -75,6 +75,10 @@ public class UserLoadSaveManager : MonoBehaviour
         // Save the updated JSON to the file
         File.WriteAllText(saveFilePath, updatedJson);
         LoadAvailableUsersFile();
+        if (defaultSave)
+        {
+            return;
+        }
         NewUserInfoSavedSuccessEvent?.Invoke(dataToSave);
         Debug.Log("Saved users to path : " + saveFilePath);
     }
@@ -86,7 +90,7 @@ public class UserLoadSaveManager : MonoBehaviour
         defaultUserData.userName = "DefaultUser";
         defaultUserData.userPassword = "DefaultPassword";
 
-        SaveUserToFile(defaultUserData);
+        SaveUserToFile(defaultUserData, true);
 
     }
 
