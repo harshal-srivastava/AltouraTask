@@ -39,6 +39,12 @@ public class Login_Signup_UI_Manager : MonoBehaviour
     [SerializeField]
     private LoginSignUpManager loginSignUpManagerRef;
 
+    [SerializeField]
+    private GameObject loginSuccessPopUp;
+
+    public delegate void LoginComplete();
+    public static LoginComplete LoginCompleteEvent;
+
 
     private void Awake()
     {
@@ -67,6 +73,7 @@ public class Login_Signup_UI_Manager : MonoBehaviour
 
     public void ShowSignUporLoginScreen(int mode)
     {
+        ResetElements();
         userStatusScreen.SetActive(false);
         currUserEntryMode = mode==0?UserEntryMode.Login:UserEntryMode.SignUp;
         SetupSignUpLoginScreenAccordingToEntryMode();
@@ -121,11 +128,15 @@ public class Login_Signup_UI_Manager : MonoBehaviour
     private void AttachEventSpecificListeners()
     {
         LoginSignUpManager.LoginFailedEvent += LoginFailed;
+        UserLoadSaveManager.NewUserInfoSavedSuccessEvent += SignUpSuccess;
+        LoginSignUpManager.LoginSuccessEvent += LoginSuccess;
     }
 
     private void DetachEventSpecificListeners()
     {
         LoginSignUpManager.LoginFailedEvent -= LoginFailed;
+        UserLoadSaveManager.NewUserInfoSavedSuccessEvent -= SignUpSuccess;
+        LoginSignUpManager.LoginSuccessEvent -= LoginSuccess;
     }
 
 
@@ -139,14 +150,19 @@ public class Login_Signup_UI_Manager : MonoBehaviour
         loginSignUpManagerRef.VerifyPassword(userNameInputField.text, passWordInputField.text);
     }
 
-    private void LoginSuccess()
+    private void LoginSuccess(string username)
     {
-
+        loginSuccessPopUp.SetActive(true);
     }
 
     private void LoginFailed(string reason)
     {
         ShowError(reason);
+    }
+
+    public void LoginSuccessPopUpNextButtonPressed()
+    {
+        LoginCompleteEvent?.Invoke();
     }
     #endregion
 
@@ -160,9 +176,9 @@ public class Login_Signup_UI_Manager : MonoBehaviour
         loginSignUpManagerRef.SignUpNewUser(userNameInputField.text, passWordInputField.text);
     }
 
-    private void SignUpSuccess()
+    private void SignUpSuccess(UserData newUser)
     {
-
+        goToLoginScreenPopUp.SetActive(true);
     }
     #endregion
 
