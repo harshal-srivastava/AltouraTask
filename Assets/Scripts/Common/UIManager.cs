@@ -39,16 +39,23 @@ public class UIManager : MonoBehaviour
     private void AttachEventSpecificListeners()
     {
         Login_Signup_UI_Manager.LoginCompleteEvent += GoToProjectScreen;
+        ProjectSelectionUIManager.Project1InitiatedEvent += GoToProject1;
     }
 
     private void DetachEventSpecificListeners()
     {
         Login_Signup_UI_Manager.LoginCompleteEvent -= GoToProjectScreen;
+        ProjectSelectionUIManager.Project1InitiatedEvent -= GoToProject1;
     }
 
     private void GoToProjectScreen()
     {
         ShowScreen(1);
+    }
+
+    private void GoToProject1()
+    {
+        ShowScreen(2);
     }
 
     private void OnDestroy()
