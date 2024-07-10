@@ -23,6 +23,9 @@ public class ResourcePathsSO : ScriptableObject
     [SerializeField]
     private string playerControlPrefabPath;
 
+    [SerializeField]
+    private string userDataFilePath;
+
     public string VideosFolderPath
     {
         get
@@ -68,6 +71,14 @@ public class ResourcePathsSO : ScriptableObject
         get
         {
             return playerControlPrefabPath;
+        }
+    }
+
+    public string UserDataFilePath
+    {
+        get
+        {
+            return userDataFilePath;
         }
     }
 

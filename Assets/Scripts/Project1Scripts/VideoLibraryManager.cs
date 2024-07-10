@@ -15,11 +15,6 @@ public class VideoLibraryManager : MonoBehaviour
     [SerializeField]
     private string bundleName;
 
-    private string videosAssetBundleURL = "";
-
-    [SerializeField]
-    private GameObject videoThumbnailPrefab;
-
     [SerializeField]
     private GameObject videoThumbnailHolder;
 
@@ -39,46 +34,40 @@ public class VideoLibraryManager : MonoBehaviour
 
     private void GetAllAvailableVideos()
     {
-        //videosAssetBundleURL = "file://" + Application.dataPath + "/AssetBundles/videos";
-        //videosAssetBundleURL = string.Format("file:///{0}/AssetBundles/{1}", Application.streamingAssetsPath, bundleName);
-        videosAssetBundleURL = Path.Combine(Application.streamingAssetsPath, bundleName);
-        Debug.Log("path : " + videosAssetBundleURL);
-        StartCoroutine(LoadVideoFromBundle());
+        LoadVideoFromAssetBundle();
     }
 
-
-    private IEnumerator LoadVideoFromBundle()
+    private void LoadVideoFromAssetBundle()
     {
-        var www = UnityWebRequestAssetBundle.GetAssetBundle(videosAssetBundleURL,0);
-        
-            yield return www.SendWebRequest();
+        ResourceLoaderUtil.instance.LoadAssetBundle(bundleName);
+        ResourceLoaderUtil.AssetBundleLoadedEvent += AssetBundleLoaded;
+    }
 
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogError(www.error);
-                yield break;
-            }
-
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
-
+    private void AssetBundleLoaded(AssetBundle bundle)
+    {
+        if (bundle != null)
+        {
             availableLibraryOfVideosList = bundle.LoadAllAssets<VideoClip>();
 
             if (availableLibraryOfVideosList != null)
             {
                 SetLibraryGrid();
+                ResourceLoaderUtil.AssetBundleLoadedEvent -= AssetBundleLoaded;
             }
             else
             {
                 Debug.LogError("Failed to load video clip from AssetBundle.");
             }
-        
+        }
     }
+
 
     private void SetLibraryGrid()
     {
         for (int i = 0; i < availableLibraryOfVideosList.Length; i++)
         {
-            Button videoThumbnail = Instantiate(videoThumbnailPrefab, videoThumbnailHolder.transform).GetComponent<Button>();
+            GameObject videothumbNailPrefab = ResourceLoaderUtil.instance.LoadPrefab(PrefabType.VideoThumbNailPrefab);
+            Button videoThumbnail = Instantiate(videothumbNailPrefab, videoThumbnailHolder.transform).GetComponent<Button>();
             TextMeshProUGUI text = videoThumbnail.transform.GetComponentInChildren<TextMeshProUGUI>();
             text.text = string.Format("Video : {0}", i + 1);
             int j = i;

@@ -9,6 +9,9 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject[] applicationScreensArray;
 
+    [SerializeField]
+    private Camera UICamera;
+
     // 0 : login/signup screen
     // 1 : projects screen
     // 2 : Project 1 screen
@@ -40,12 +43,14 @@ public class UIManager : MonoBehaviour
     {
         Login_Signup_UI_Manager.LoginCompleteEvent += GoToProjectScreen;
         ProjectSelectionUIManager.Project1InitiatedEvent += GoToProject1;
+        ProjectSelectionUIManager.Project2InitiatedEvent += GoToProject2;
     }
 
     private void DetachEventSpecificListeners()
     {
         Login_Signup_UI_Manager.LoginCompleteEvent -= GoToProjectScreen;
         ProjectSelectionUIManager.Project1InitiatedEvent -= GoToProject1;
+        ProjectSelectionUIManager.Project2InitiatedEvent -= GoToProject2;
     }
 
     private void GoToProjectScreen()
@@ -56,6 +61,13 @@ public class UIManager : MonoBehaviour
     private void GoToProject1()
     {
         ShowScreen(2);
+    }
+
+    private void GoToProject2()
+    {
+        UICamera.gameObject.SetActive(false);
+        this.gameObject.SetActive(false);
+        ShowScreen(3);
     }
 
     private void OnDestroy()

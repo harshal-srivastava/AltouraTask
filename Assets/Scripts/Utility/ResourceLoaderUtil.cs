@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using System.IO;
+using UnityEngine.Networking;
 
 public enum PrefabType
 {
@@ -21,6 +23,9 @@ public class ResourceLoaderUtil : MonoBehaviour
     private ResourcePathsSO pathSO;
 
     public static ResourceLoaderUtil instance;
+
+    public delegate void AssetBundleLoaded(AssetBundle bundle);
+    public static AssetBundleLoaded AssetBundleLoadedEvent;
 
     private void Awake()
     {
@@ -42,9 +47,33 @@ public class ResourceLoaderUtil : MonoBehaviour
     }
 
 
-    public AssetBundle LoadAssetBundle()
+    public void LoadAssetBundle(string bundleName)
     {
-        return null;
+        StartCoroutine(LoadAssetBundleRoutine(bundleName));
+    }
+
+    private IEnumerator LoadAssetBundleRoutine(string assetBundleName)
+    {
+        string path = Application.dataPath + pathSO.AssetBundlePath + assetBundleName;
+        var www = UnityWebRequestAssetBundle.GetAssetBundle(path, 0);
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError(www.error);
+            yield break;
+        }
+
+        AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
+        if (bundle != null)
+        {
+            AssetBundleLoadedEvent?.Invoke(bundle);
+        }
+        else
+        {
+            Debug.LogError("Could not load asset bundle");
+        }
     }
 
     public VideoClip LoadVideo(string videoName)
@@ -73,5 +102,23 @@ public class ResourceLoaderUtil : MonoBehaviour
 
         GameObject obj = Resources.Load<GameObject>(prefabPath);
         return obj;
+    }
+
+    public TextAsset LoadFile(string fileFormat = "")
+    {
+        string path = pathSO.UserDataFilePath;
+        string filePath = Path.Combine(Application.dataPath + "/Resources/", (path + fileFormat));
+        Debug.Log("file path from resource loader : " + filePath);
+        if (File.Exists(filePath))
+        {
+            Debug.Log("File exists resource loader");
+            TextAsset file = Resources.Load<TextAsset>(path);
+            return file;
+        }
+        else
+        {
+            Debug.Log("file not found resource loader");
+        }
+        return null;
     }
 }
