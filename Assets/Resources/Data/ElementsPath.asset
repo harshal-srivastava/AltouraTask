@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   videosFolderPath: Videos/
   videoThumbnailPrefabPath: Prefabs/VideoThumbnail
-  assetBundlePath: /Resources/AssetBundles/
+  assetBundlePath: /AssetBundles/
   glbModelPath: Models/Model
   roomPrefabPath: Prefabs/Room
   playerControlPrefabPath: Prefabs/Player

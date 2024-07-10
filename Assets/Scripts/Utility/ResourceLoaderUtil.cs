@@ -54,7 +54,7 @@ public class ResourceLoaderUtil : MonoBehaviour
 
     private IEnumerator LoadAssetBundleRoutine(string assetBundleName)
     {
-        string path = Application.dataPath + pathSO.AssetBundlePath + assetBundleName;
+        string path = Application.streamingAssetsPath + pathSO.AssetBundlePath + assetBundleName;
         var www = UnityWebRequestAssetBundle.GetAssetBundle(path, 0);
 
         yield return www.SendWebRequest();
