@@ -2412,6 +2412,8 @@ MonoBehaviour:
   glbModel: {fileID: 0}
   project2UI: {fileID: 0}
   project2ObjectsHolder: {fileID: 452198897}
+  playerTeleportationLocation: {x: 16.5, y: 1.6, z: -14.5}
+  UITeleportationLocation: {x: -3.6, y: 12.7, z: -7.3}
 --- !u!1 &483688804
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class Project2Manager : MonoBehaviour
     private GameObject room;
 
     [SerializeField]
-    private GameObject playerController;
+    private PlayerMovementController playerController;
 
     [SerializeField]
     private GameObject glbModel;
@@ -20,6 +20,16 @@ public class Project2Manager : MonoBehaviour
     [SerializeField]
     private Transform project2ObjectsHolder;
 
+    [SerializeField]
+    private Vector3 playerTeleportationLocation;
+
+    [SerializeField]
+    private Vector3 UITeleportationLocation;
+
+    private Vector3 playerLastPosition;
+    private Vector3 UILastPosition;
+    
+
     private void Awake()
     {
         AttachEventSpecificListeners();
@@ -28,11 +38,13 @@ public class Project2Manager : MonoBehaviour
     private void AttachEventSpecificListeners()
     {
         ProjectSelectionUIManager.Project2InitiatedEvent += InitializeProject2;
+        Project2UIManager.ActivateTeleportationEvent += TeleportPlayerAndUI;
     }
 
     private void DetachEventSpecficiListeners()
     {
         ProjectSelectionUIManager.Project2InitiatedEvent -= InitializeProject2;
+        Project2UIManager.ActivateTeleportationEvent -= TeleportPlayerAndUI;
     }
 
     private void InitializeProject2()
@@ -54,7 +66,7 @@ public class Project2Manager : MonoBehaviour
         project2UI.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
 
         //instantiating player
-        playerController = GameObject.Instantiate(playerPrefab, project2ObjectsHolder);
+        playerController = GameObject.Instantiate(playerPrefab, project2ObjectsHolder).GetComponent<PlayerMovementController>();
         playerController.transform.localPosition = new Vector3(0, 1.6f, 8);
 
         //initializing camLookAtRef and assigning player camera to camLookAt and project2UIManager
@@ -68,6 +80,29 @@ public class Project2Manager : MonoBehaviour
         BoxCollider modelBox = glbModel.AddComponent<BoxCollider>();
         modelBox.center = new Vector3(0, 0, 1);
         modelBox.size = new Vector3(1, 1, 1.85f);
+    }
+
+    private void TeleportPlayerAndUI(bool reverse)
+    {
+        StartCoroutine(BeginTeleportation(reverse));
+    }
+
+    private IEnumerator BeginTeleportation(bool reverse)
+    {
+        playerController.ShowTeleportEffect();
+        yield return new WaitForSeconds(0.15f);
+        if (reverse)
+        {
+            playerController.transform.localPosition = playerLastPosition;
+            project2UI.transform.localPosition = UILastPosition;
+        }
+        else
+        {
+            playerLastPosition = playerController.transform.localPosition;
+            UILastPosition = project2UI.transform.localPosition;
+            playerController.transform.localPosition = playerTeleportationLocation;
+            project2UI.transform.localPosition = UITeleportationLocation;
+        }
     }
 
     private void Update()
