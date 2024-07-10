@@ -18,4 +18,5 @@ MonoBehaviour:
   glbModelPath: Models/Model
   roomPrefabPath: Prefabs/Room
   playerControlPrefabPath: Prefabs/Player
+  project2UIPath: Prefabs/Project2Canvas
   userDataFilePath: users

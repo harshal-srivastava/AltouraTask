@@ -24,6 +24,9 @@ public class ResourcePathsSO : ScriptableObject
     private string playerControlPrefabPath;
 
     [SerializeField]
+    private string project2UIPath;
+
+    [SerializeField]
     private string userDataFilePath;
 
     public string VideosFolderPath
@@ -79,6 +82,14 @@ public class ResourcePathsSO : ScriptableObject
         get
         {
             return userDataFilePath;
+        }
+    }
+
+    public string Project2UIPath
+    {
+        get
+        {
+            return project2UIPath;
         }
     }
 

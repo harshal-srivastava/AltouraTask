@@ -11,6 +11,7 @@ public enum PrefabType
     GLBModel,
     Room,
     Player,
+    Project2UIPrefab,
     None
 
 }
@@ -97,6 +98,9 @@ public class ResourceLoaderUtil : MonoBehaviour
                 break;
             case PrefabType.Player:
                 prefabPath = pathSO.PlayerControlPrefabPath;
+                break;
+            case PrefabType.Project2UIPrefab:
+                prefabPath = pathSO.Project2UIPath;
                 break;
         }
 

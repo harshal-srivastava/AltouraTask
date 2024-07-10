@@ -2410,6 +2410,7 @@ MonoBehaviour:
   room: {fileID: 0}
   playerController: {fileID: 0}
   glbModel: {fileID: 0}
+  project2UI: {fileID: 0}
   project2ObjectsHolder: {fileID: 452198897}
 --- !u!1 &483688804
 GameObject:
