@@ -125,4 +125,11 @@ public class ResourceLoaderUtil : MonoBehaviour
         }
         return null;
     }
+
+    public Sprite LoadSprite(string spriteName = "")
+    {
+        string path = pathSO.Project2DisplaySpritePath;
+        Sprite sprite = Resources.Load<Sprite>(path + spriteName);
+        return sprite;
+    }
 }

@@ -29,6 +29,9 @@ public class ResourcePathsSO : ScriptableObject
     [SerializeField]
     private string userDataFilePath;
 
+    [SerializeField]
+    private string project2DisplaySpritePath;
+
     public string VideosFolderPath
     {
         get
@@ -90,6 +93,14 @@ public class ResourcePathsSO : ScriptableObject
         get
         {
             return project2UIPath;
+        }
+    }
+
+    public string Project2DisplaySpritePath
+    {
+        get
+        {
+            return project2DisplaySpritePath;
         }
     }
 
