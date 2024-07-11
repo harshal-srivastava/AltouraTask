@@ -60,6 +60,11 @@ public class VideoPlayerUIManager : MonoBehaviour
         libraryScreen.SetActive(false);
     }
 
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
+
     private void OnDestroy()
     {
         DetachEventSpecificListeners();

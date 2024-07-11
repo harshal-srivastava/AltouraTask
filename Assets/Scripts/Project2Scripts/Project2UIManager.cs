@@ -121,4 +121,9 @@ public class Project2UIManager : MonoBehaviour
         nextButton.SetActive(true);
         ActivateTeleportationEvent?.Invoke(true);
     }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 }

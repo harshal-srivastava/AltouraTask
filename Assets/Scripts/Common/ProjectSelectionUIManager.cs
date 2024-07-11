@@ -34,4 +34,9 @@ public class ProjectSelectionUIManager : MonoBehaviour
     {
         Project2InitiatedEvent?.Invoke();
     }
+
+    public void QuitApplication()
+    {
+        Application.Quit();
+    }
 }

@@ -105,14 +105,6 @@ public class Project2Manager : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            InitializeProject2();
-        }
-    }
-
     private void OnDestroy()
     {
         DetachEventSpecficiListeners();
