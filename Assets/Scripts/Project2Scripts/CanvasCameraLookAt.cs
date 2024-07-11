@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Class responsible to make the canvas always face towards the player
+/// </summary>
 public class CanvasCameraLookAt : MonoBehaviour
 {
     [SerializeField]
@@ -15,6 +18,11 @@ public class CanvasCameraLookAt : MonoBehaviour
     [SerializeField]
     private float followSpeed;
 
+    /// <summary>
+    /// Initializes the script variables
+    /// Assigns the camera transform the canvas needs to face
+    /// </summary>
+    /// <param name="camTransform"></param>
     public void Initialize(Transform camTransform)
     {
         playerCameraTransform = camTransform;
@@ -25,6 +33,10 @@ public class CanvasCameraLookAt : MonoBehaviour
         LookAt();
     }
 
+    /// <summary>
+    /// Function to update the rotation of the canvas gameobject based on the camera movement
+    /// So that it always faces towards the camera transform assigned
+    /// </summary>
     private void LookAt()
     {
         if (playerCameraTransform == null)

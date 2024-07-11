@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class responsible for functionalities for the project 2
+/// This includes dynamically generating the entire level by instantiating prefabs in runtime
+/// </summary>
 public class Project2Manager : MonoBehaviour
 {
     [SerializeField]
@@ -35,18 +39,32 @@ public class Project2Manager : MonoBehaviour
         AttachEventSpecificListeners();
     }
 
+    /// <summary>
+    /// Function to attach game event listeners
+    /// Helps in decoupling the referencing to multiple classes
+    /// </summary>
     private void AttachEventSpecificListeners()
     {
         ProjectSelectionUIManager.Project2InitiatedEvent += InitializeProject2;
         Project2UIManager.ActivateTeleportationEvent += TeleportPlayerAndUI;
     }
 
+    /// <summary>
+    /// Function to detach listeners to respective class game events
+    /// This is done as a safe keeping in future if a scene reload is required
+    /// Static events couple with delegates don't work so well on scene reloads
+    /// So detach them if object is destroyed and it will be attached again when instance of class is created
+    /// </summary>
     private void DetachEventSpecficiListeners()
     {
         ProjectSelectionUIManager.Project2InitiatedEvent -= InitializeProject2;
         Project2UIManager.ActivateTeleportationEvent -= TeleportPlayerAndUI;
     }
 
+    /// <summary>
+    /// Listener to ProjectSelectionUIManager.Project2InitiatedEvent
+    /// This will load all the required prefabs from the resources folder and build out the level
+    /// </summary>
     private void InitializeProject2()
     {
         GameObject roomprefab = ResourceLoaderUtil.instance.LoadPrefab(PrefabType.Room);
@@ -73,7 +91,7 @@ public class Project2Manager : MonoBehaviour
         project2UI.GetComponent<Canvas>().worldCamera = (playerController.transform.GetChild(0).GetComponent<Camera>());
         project2UI.GetComponent<CanvasCameraLookAt>().Initialize(playerController.transform.GetChild(0));
             
-        //instantiating model
+        //instantiating the GLB model
         glbModel = GameObject.Instantiate(glbModelPrefab, project2ObjectsHolder);
         glbModel.transform.localScale = new Vector3(6, 6, 6);
         glbModel.transform.localPosition = new Vector3(0, 0.5f, 0);
@@ -82,11 +100,21 @@ public class Project2Manager : MonoBehaviour
         modelBox.size = new Vector3(1, 1, 1.85f);
     }
 
+    /// <summary>
+    /// Function to enable the teleportation and start the visual effect for it
+    /// </summary>
+    /// <param name="reverse"></param>
     private void TeleportPlayerAndUI(bool reverse)
     {
         StartCoroutine(BeginTeleportation(reverse));
     }
 
+    /// <summary>
+    /// Coroutine to start the fade in and out effect and then change the position of the player and the UI panel
+    /// Same function can be used to teleport the user back to their last location before teleportation
+    /// </summary>
+    /// <param name="reverse"></param>
+    /// <returns></returns>
     private IEnumerator BeginTeleportation(bool reverse)
     {
         playerController.ShowTeleportEffect();

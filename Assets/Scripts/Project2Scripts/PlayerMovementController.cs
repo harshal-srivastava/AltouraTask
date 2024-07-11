@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Class responsible for moving the player around the level in the first person mode
+/// </summary>
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField]
@@ -18,14 +21,14 @@ public class PlayerMovementController : MonoBehaviour
     private float maxLookAngle = 80f;
 
     private float verticalLookRotation = 0;
-    private Rigidbody rb;
+    private Rigidbody playerRigidBody;
 
     [SerializeField]
     private Image teleportationEffectImage;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        playerRigidBody = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -34,15 +37,21 @@ public class PlayerMovementController : MonoBehaviour
         Look();
     }
 
+    /// <summary>
+    /// Function to move the player around based on the inputs, whether from keyboard or any other source
+    /// </summary>
     void Move()
     {
         float moveDirectionX = Input.GetAxis("Horizontal");
         float moveDirectionZ = Input.GetAxis("Vertical");
 
         Vector3 moveDirection = transform.right * moveDirectionX + transform.forward * moveDirectionZ;
-        rb.velocity = new Vector3(moveDirection.x * speed, rb.velocity.y, moveDirection.z * speed);
+        playerRigidBody.velocity = new Vector3(moveDirection.x * speed, playerRigidBody.velocity.y, moveDirection.z * speed);
     }
 
+    /// <summary>
+    /// Function enabling the player to look around based on mouse inputs
+    /// </summary>
     void Look()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
@@ -55,11 +64,19 @@ public class PlayerMovementController : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
     }
 
+    /// <summary>
+    /// Function to show the teleportation visual effect
+    /// </summary>
     public void ShowTeleportEffect()
     {
         StartCoroutine(ShowTeleportationEffectAnimation(0.3f));
     }
 
+    /// <summary>
+    /// Coroutine to show the fade in and out effect when user is being teleported
+    /// </summary>
+    /// <param name="time"></param>
+    /// <returns></returns>
     private IEnumerator ShowTeleportationEffectAnimation(float time)
     {
         float rate = 1.0f / time;

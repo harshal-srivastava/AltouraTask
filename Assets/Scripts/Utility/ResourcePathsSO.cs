@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Scriptable object class to store the resources path in order to load it using the ResourceLoaderUtil
+/// This mechanism is to easily load new elements by simply adding their path over here or changing the path of existing objects
+/// </summary>
 [CreateAssetMenu(fileName = "PathSO", menuName = "CustomObject/Path")]
 public class ResourcePathsSO : ScriptableObject
 {
