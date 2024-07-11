@@ -37,7 +37,7 @@ public class UserLoadSaveManager : MonoBehaviour
     /// Transfer the information retrieved to the availableUserDictionary
     /// Using dictionary helps in fast user information fetching
     /// </summary>
-    void LoadAvailableUsersFile()
+    private void LoadAvailableUsersFile()
     {
         if (File.Exists(saveFilePath))
         {
@@ -62,7 +62,7 @@ public class UserLoadSaveManager : MonoBehaviour
     /// Username is key, password is value in the dictionary
     /// </summary>
     /// <param name="usersFetched"></param>
-    void PopulateAvailableUserDictionary(List<UserData> usersFetched)
+    private void PopulateAvailableUserDictionary(List<UserData> usersFetched)
     {
         availableUserDictionary = new Dictionary<string, string>();
         for (int i=0;i<usersFetched.Count;i++)
@@ -157,12 +157,18 @@ public class UserLoadSaveManager : MonoBehaviour
     }
 }
 
+/// <summary>
+/// Serializable class representing array of users retreived json data
+/// </summary>
 [System.Serializable]
 public class Users
 {
     public List<UserData> users;
 }
 
+/// <summary>
+/// Serializable class representing each user
+/// </summary>
 [System.Serializable]
 public class UserData
 {

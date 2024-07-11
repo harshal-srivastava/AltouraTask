@@ -14,6 +14,10 @@ public enum UIState
     Teleported,
 
 }
+
+/// <summary>
+/// Class responsible for the UI/UX flow for the part 2 of the assignment
+/// </summary>
 public class Project2UIManager : MonoBehaviour
 {
     [SerializeField]

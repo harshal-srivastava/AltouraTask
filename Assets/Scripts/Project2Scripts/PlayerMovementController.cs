@@ -40,7 +40,7 @@ public class PlayerMovementController : MonoBehaviour
     /// <summary>
     /// Function to move the player around based on the inputs, whether from keyboard or any other source
     /// </summary>
-    void Move()
+    private void Move()
     {
         float moveDirectionX = Input.GetAxis("Horizontal");
         float moveDirectionZ = Input.GetAxis("Vertical");
@@ -52,7 +52,7 @@ public class PlayerMovementController : MonoBehaviour
     /// <summary>
     /// Function enabling the player to look around based on mouse inputs
     /// </summary>
-    void Look()
+    private void Look()
     {
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;

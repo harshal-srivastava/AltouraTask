@@ -77,7 +77,7 @@ public class VideoPlayerController : MonoBehaviour
     /// Function to disable the video player
     /// </summary>
     /// <param name="player"></param>
-    void DisableVideoPlayer(VideoPlayer player)
+    private void DisableVideoPlayer(VideoPlayer player)
     {
         VideoEndedEvent?.Invoke();
     }
